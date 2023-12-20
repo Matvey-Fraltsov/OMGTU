@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApplication69
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Введите длину пути: ");
+            int distance = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Введите количество пунктов отдыха: ");
+            int restPoints = Convert.ToInt32(Console.ReadLine());
+
+            int[] distanceToRestPoints = new int[restPoints];
+            for (int i = 0; i < restPoints; i++)
+            {
+                Console.Write("Введите расстояние от начала пути до пункта отдыха" + " " + (i+1) + ":");
+                distanceToRestPoints[i] = Convert.ToInt32(Console.ReadLine());
+            }
+
+            Console.Write("Введите среднюю скорость группы в км/ч: ");
+            double avarageSpeed = Convert.ToDouble(Console.ReadLine())/60;
+            Console.WriteLine("Средняя в км/мин: " + avarageSpeed);
+
+            Console.Write("Введите время восхода: ");
+            string sunriseTime = Convert.ToString(Console.ReadLine());
+            DateTime t1 = DateTime.Parse(sunriseTime);
+            Console.Write("Введите время захода: ");
+            string sunsetTime = Convert.ToString(Console.ReadLine());
+            DateTime t2 = DateTime.Parse(sunsetTime);
+            TimeSpan ts = t2 - t1;
+            int minutes = (int)ts.TotalMinutes;
+            Console.WriteLine(minutes);
+
+            double resultDistance = avarageSpeed * minutes;
+            Console.WriteLine("Дистанция: " + resultDistance);
+
+            int[] restPointsOutput = new int[restPoints];
+            for(int i = (distanceToRestPoints.Length)-1, j = 0 ; i > 0; i--){
+                while (resultDistance > distanceToRestPoints[i])
+                {
+                    restPointsOutput[j] = distanceToRestPoints[i];
+
+                }
+                j++;
+                Console.WriteLine(restPointsOutput[j]);
+            }
+            string s = string.Join(",", restPointsOutput);
+
+            Console.WriteLine(s);
+        }
+    }
+}
