@@ -1,58 +1,76 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApplication69
+namespace Tourist
 {
-    class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
+            bool result = true;
+
             Console.Write("Введите длину пути: ");
             int distance = Convert.ToInt32(Console.ReadLine());
 
-            Console.Write("Введите количество пунктов отдыха: ");
-            int restPoints = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Количество пунктов отдыха: ");
+            int numberOfRestPoints = Convert.ToInt32(Console.ReadLine());
+            int[] restPoints = new int[numberOfRestPoints];
 
-            int[] distanceToRestPoints = new int[restPoints];
-            for (int i = 0; i < restPoints; i++)
+            for (int i = 0; i < numberOfRestPoints; i++)
             {
-                Console.Write("Введите расстояние от начала пути до пункта отдыха" + " " + (i+1) + ":");
-                distanceToRestPoints[i] = Convert.ToInt32(Console.ReadLine());
+                Console.Write($"Введите расстояние от начала пути до пункта номер: {i + 1}:");
+                restPoints[i] = Convert.ToInt32(Console.ReadLine());
             }
 
-            Console.Write("Введите среднюю скорость группы в км/ч: ");
-            double avarageSpeed = Convert.ToDouble(Console.ReadLine())/60;
-            Console.WriteLine("Средняя в км/мин: " + avarageSpeed);
+            Console.Write("Введите среднюю скорость в км/ч: ");
+            double averageSpeed = Convert.ToDouble(Console.ReadLine()) / 60;
 
-            Console.Write("Введите время восхода: ");
-            string sunriseTime = Convert.ToString(Console.ReadLine());
-            DateTime t1 = DateTime.Parse(sunriseTime);
-            Console.Write("Введите время захода: ");
-            string sunsetTime = Convert.ToString(Console.ReadLine());
-            DateTime t2 = DateTime.Parse(sunsetTime);
-            TimeSpan ts = t2 - t1;
-            int minutes = (int)ts.TotalMinutes;
-            Console.WriteLine(minutes);
+            Console.Write("Введите время восхода солнца: ");
+            DateTime sunriseTime = Convert.ToDateTime(Console.ReadLine());
 
-            double resultDistance = avarageSpeed * minutes;
-            Console.WriteLine("Дистанция: " + resultDistance);
+            Console.Write("Введите время захода солнца: ");
+            DateTime sunsetTime = Convert.ToDateTime(Console.ReadLine());
 
-            int[] restPointsOutput = new int[restPoints];
-            for(int i = (distanceToRestPoints.Length)-1, j = 0 ; i > 0; i--){
-                while (resultDistance > distanceToRestPoints[i])
-                {
-                    restPointsOutput[j] = distanceToRestPoints[i];
+            double differenceTime = (sunsetTime - sunriseTime).TotalMinutes;
 
+            double distancePerDay = averageSpeed * differenceTime;
+
+            int count = 0;
+            int[] restPointsOutput = new int[restPoints.Length];
+            for (int i = 0, k = 0; i < restPoints.Length; i++)
+            {
+                if (restPoints[i] > distance) {
+                    result = false;
+                    break;
                 }
-                j++;
-                Console.WriteLine(restPointsOutput[j]);
+                if (restPoints[0] > distancePerDay)
+                {
+                    result = false;
+                    break;
+                }
+                if (restPoints[i] > distancePerDay)
+                {
+                    if (restPoints[i] - restPoints[i - 1] > distancePerDay)
+                    {
+                        result = false;
+                        break;
+                    }
+                    restPointsOutput[k] = restPoints[i - 1];
+                    k++;
+                    count++;
+                }
             }
-            string s = string.Join(",", restPointsOutput);
-
-            Console.WriteLine(s);
+            if (result == true)
+            {
+                restPointsOutput = restPointsOutput.Where(x => x != 0).ToArray();
+                Console.WriteLine("Группа побывала в пунктах: " + String.Join(",", restPointsOutput));
+                Console.WriteLine($"В путы пробыла: {count} дней");
+            }
+            else
+                Console.WriteLine("Невозможная ситуация!");
         }
     }
 }
