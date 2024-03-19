@@ -1,0 +1,20 @@
+from math import inf
+
+
+vert = int(input("Введите количество вершин графа: "))
+start = int(input("ведите начлаьную точку: ")) - 1
+matrix = [[int(i) for i in input().split()] for _ in range(vert)]
+for i in range(len(matrix)):
+    # matrix[start][i] = 0
+    if i == start: continue
+    for j in range(len(matrix[0])):
+        if matrix[i][j] == 0:
+            matrix[i][j] = inf
+print(*matrix, sep='\n')
+
+
+# 0 1 0 0 3
+# 0 0 8 7 1
+# 0 0 0 1 -5
+# 0 0 2 0 0
+# 0 0 0 4 0
