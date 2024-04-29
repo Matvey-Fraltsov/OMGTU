@@ -1,0 +1,47 @@
+Func<double, double> func = (double x) => -x * x + 9;
+double intervalStart = -3;
+double intervalEnd = 3;
+double dx = 0.00001;
+
+try
+{
+    double result = TrapezoidalIntegration.CalculateIntegral(func, intervalStart, intervalEnd, dx);
+    Console.WriteLine("Результат: " + result);
+}
+catch (Exception e)
+{
+
+
+    Console.WriteLine(e.Message);
+}
+using System;
+
+public class TrapezoidalIntegration
+{
+    public static double CalculateIntegral(Func<double, double> func, double intervalStart, double intervalEnd, double dx)
+    {   
+        if (Math.Abs(dx) < Math.Pow(10, -7))
+		throw new Exception("dx близок к машинному нулю");
+	if (!double.IsNormal(intervalStart))
+		throw new Exception("начало интервала не является числом") 
+	if (!double.IsNormal(intervalEnd)) 
+		throw new Exception("конец интервала не является числом")
+	if (intervalStart > intervalEnd)
+		throw new Exception("неверно заданы границы интервала")
+	
+
+        double result = 0;
+        int intervals = (int)((intervalEnd - intervalStart)/dx);
+        
+        for(int i = 0; i < intervals; i++)
+        {
+            double x1 = intervalStart + i * dx;
+            double x2 = intervalStart + (i+1) * dx;
+            double area = Math.Abs((func(x1) + func(x2))/ 2 * dx);
+            result += area;
+        }
+
+        
+        return result;
+    }
+}
