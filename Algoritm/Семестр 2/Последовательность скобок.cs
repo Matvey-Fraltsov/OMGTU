@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-class BracketChecker
+class ReversePolishNotation
 {
-    public static bool IsValid(string expression)
+    public static bool IsValid(string sequence)
     {
         Stack<char> stack = new Stack<char>();
         Dictionary<char, char> mapping = new Dictionary<char, char>
@@ -13,27 +13,27 @@ class BracketChecker
             {']', '['}
         };
 
-        foreach (char c in expression)
+        foreach (char c in sequence)
         {
             if (mapping.ContainsValue(c)) stack.Push(c);
             else if (mapping.ContainsKey(c))
             {
-                if (stack.Count == 0 || mapping[c] != stack.Pop()) return false; 
+                if (stack.Count == 0 || mapping[c] != stack.Pop()) return false;
             }
         }
         return stack.Count == 0;
     }
-    
+
     public static void Main()
     {
-        string expr1 = "([{}])";
-        string expr2 = "{[]]}";
-        string expr3 = "()";
-        string expr4 = "([)()]";
+        string seq1 = "(}])";
+        string seq2 = "{[]}";
+        string seq3 = "{}";
+        string seq4 = "([){)";
 
-        Console.WriteLine(IsValid(expr1)); // True
-        Console.WriteLine(IsValid(expr2)); // False
-        Console.WriteLine(IsValid(expr3)); // True
-        Console.WriteLine(IsValid(expr4)); // False
+        Console.WriteLine(IsValid(seq1)); // False
+        Console.WriteLine(IsValid(seq2)); // True
+        Console.WriteLine(IsValid(seq3)); // True
+        Console.WriteLine(IsValid(seq4)); // False
     }
 }
