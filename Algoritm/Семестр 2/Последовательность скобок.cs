@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-class ReversePolishNotation
+class SequenceBrackets
 {
     public static bool IsValid(string sequence)
     {
