@@ -1,13 +1,14 @@
-namespace ConsoleApp1
+namespace PolishNotation
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            string polishNotation = "33 3 + 2 *";
-            Stack<int> stack = new Stack<int>();
-            int result = 0;
+            string polishNotation = "33 2 + 2 /";
+            Stack<double> stack = new Stack<double>();
+            double result = 0;
             string sequance = "";
+            bool notError = true;
 
             foreach (char elem in polishNotation)
             {
@@ -21,7 +22,7 @@ namespace ConsoleApp1
                 {
                     if (sequance != "")
                     {
-                        stack.Push(int.Parse(Convert.ToString(sequance)));
+                        stack.Push(double.Parse(Convert.ToString(sequance)));
                         sequance = "";
                     }
                 }
@@ -30,11 +31,13 @@ namespace ConsoleApp1
                 {
                     if (stack.Count > 2 || stack.Count < 2)
                     {
-                        Console.WriteLine("ERROR");
+                        Console.WriteLine("Неккоретная запись!");
+                        notError = false;
                         break;
                     }
-                    int num1 = stack.Pop();
-                    int num2 = stack.Pop();
+
+                    double num1 = stack.Pop();
+                    double num2 = stack.Pop();
                     switch (elem)
                     {
                         case '+': result = num1 + num2; stack.Push(num1 + num2); break;
@@ -47,16 +50,20 @@ namespace ConsoleApp1
                                 stack.Push(num2 / num1);
                             }
                             else
+                            {
                                 Console.WriteLine("Попытка деления на ноль!");
+                                notError = false;
+                                break;
+                            }
                             break;
+                            
                     }
                 }
             }
 
+            if (notError)
             Console.WriteLine(result);
 
         }
     }
 }
-double fin = Convert.ToDouble(st.Pop());
-Console.WriteLine("Результат вычислений: " + fin);
