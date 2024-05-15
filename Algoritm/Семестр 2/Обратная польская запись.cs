@@ -1,78 +1,62 @@
-using System;
-using System.Collections;
-
-
-Console.WriteLine("Введите польскую запись (после каждого символа - пробел)");
-string s = Console.ReadLine();
-if (s.Length == 0)
-    throw new ArgumentException("Отсутствие элементов для выполнения действий");
-
-string[] m = s.Split(' ');
-switch (m[2])
+namespace ConsoleApp1
 {
-    case "+":
-        break;
-    case "-":
-        break;
-    case "*":
-        break;
-    case "/":
-        break;
-    default:
-        throw new ArgumentException("Результат ответа будет неоднозначен");
-}
-
-for (int i = 4; i < m.Length;)
-{
-    switch (m[i])
+    internal class Program
     {
-        case "+":
-            break;
-        case "-":
-            break;
-        case "*":
-            break;
-        case "/":
-            break;
-        default:
-            throw new ArgumentException("Результат ответа будет неоднозначен");
-    }
-    i += 2;
-}
-
-Stack st = new Stack();
-
-foreach (string c in m)
-{
-    if (c == "+" || c == "-" || c == "*" || c == "/")
-    {
-        double st2 = Convert.ToDouble(st.Pop());
-        double st1 = Convert.ToDouble(st.Pop());
-        double res;
-        switch (c)
+        static void Main(string[] args)
         {
-            case "+":
-                res = st1 + st2;
-                break;
-            case "-":
-                res = st1 - st2;
-                break;
-            case "*":
-                res = st1 * st2;
-                break;
-            case "/":
-                if (st2 == 0)
-                    throw new ArgumentException("Деление на 0 невозможно");
-                res = st1 / st2;
-                break;
-            default:
-                throw new ArgumentException("Недопустимый оператор: " + c);
-        }
-        st.Push(res);
-    }
-    else
-        st.Push(Convert.ToDouble(c));
-}
+            string polishNotation = "33 3 + 2 *";
+            Stack<int> stack = new Stack<int>();
+            int result = 0;
+            string sequance = "";
 
+            foreach (char elem in polishNotation)
+            {
+                if (elem != ' ' && elem != '+' && elem != '-' && elem != '*' && elem != '/')
+                {
+                    sequance += elem;
+                    continue;
+                }
+
+                if (elem != '+' && elem != '-' && elem != '*' && elem != '/')
+                {
+                    if (sequance != "")
+                    {
+                        stack.Push(int.Parse(Convert.ToString(sequance)));
+                        sequance = "";
+                    }
+                }
+
+                else
+                {
+                    if (stack.Count > 2 || stack.Count < 2)
+                    {
+                        Console.WriteLine("ERROR");
+                        break;
+                    }
+                    int num1 = stack.Pop();
+                    int num2 = stack.Pop();
+                    switch (elem)
+                    {
+                        case '+': result = num1 + num2; stack.Push(num1 + num2); break;
+                        case '-': result = num1 - num2; stack.Push(num1 - num2); break;
+                        case '*': result = num1 * num2; stack.Push(num1 * num2); break;
+                        case '/':
+                            if (num1 != 0)
+                            {
+                                result = num2 / num1;
+                                stack.Push(num2 / num1);
+                            }
+                            else
+                                Console.WriteLine("Попытка деления на ноль!");
+                            break;
+                    }
+                }
+            }
+
+            Console.WriteLine(result);
+
+        }
+    }
+}
 double fin = Convert.ToDouble(st.Pop());
 Console.WriteLine("Результат вычислений: " + fin);
