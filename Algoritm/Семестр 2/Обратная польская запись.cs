@@ -41,7 +41,7 @@ namespace PolishNotation
                     switch (elem)
                     {
                         case '+': result = num1 + num2; stack.Push(num1 + num2); break;
-                        case '-': result = num1 - num2; stack.Push(num1 - num2); break;
+                        case '-': result = num2 - num1; stack.Push(num2 - num1); break;
                         case '*': result = num1 * num2; stack.Push(num1 * num2); break;
                         case '/':
                             if (num1 != 0)
