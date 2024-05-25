@@ -2,8 +2,9 @@ class PolishNotation
 {
     public void PolNot()
     {
-        Console.WriteLine("Введите выражение записанное в обратной польской нотации.\n" +
-            "Ввод каждого символа через пробел. Пример: 3 3 + 2 *\n");
+        Console.Write("Введите выражение записанное в обратной польской нотации.\n" +
+                      "Ввод каждого символа через пробел. Пример: 3 3 + 2 *\n" +
+                      "\nВвод: ");
         string polishNotation = Console.ReadLine();
         Stack<double> stack = new Stack<double>();
         double result = 0;
@@ -31,7 +32,7 @@ class PolishNotation
             {
                 if (stack.Count > 2 || stack.Count < 2)
                 {
-                    Console.WriteLine("Неккоретная запись!");
+                    Console.WriteLine("Неккоретная запись!\n");
                     notError = false;
                     break;
                 }
@@ -51,28 +52,27 @@ class PolishNotation
                         }
                         else
                         {
-                            Console.WriteLine("Попытка деления на ноль!");
+                            Console.WriteLine("Попытка деления на ноль!\n");
                             notError = false;
                             break;
                         }
                         break;
-
                 }
             }
         }
 
         if (notError)
-            Console.WriteLine("Значение выражения равно:" + result);
+            Console.WriteLine($"Значение выражения равно: {result}\n");
     }
 }
 
 class SequenceBrackets
 {
-    public void SeqBra() 
-    {   
+    public void SeqBra()
+    {
         bool flag = false;
-        Console.WriteLine("Введите последовательность скобок.\n" +
-            "Пример: ([){)\n");
+        Console.Write("Введите последовательность скобок.\n" +
+                          "Пример: ([){)\nВвод: ");
         string sequence = Console.ReadLine();
         Stack<char> stack = new Stack<char>();
         Dictionary<char, char> mapping = new Dictionary<char, char>
@@ -89,15 +89,14 @@ class SequenceBrackets
             {
                 if (stack.Count == 0 || mapping[c] != stack.Pop())
                     flag = true;
-                    break;
+                break;
             }
         }
         if (flag)
-            Console.WriteLine("Последовательность скобок задана некорректно");
+            Console.WriteLine("Последовательность скобок задана некорректно\n");
         else
-            Console.WriteLine("Последовательность скобок задана корректно");
+            Console.WriteLine("Последовательность скобок задана корректно\n");
     }
-
 }
 
 class Menu
@@ -106,12 +105,14 @@ class Menu
     {
         int secondPoint;
         bool flag = false;
-        while (true) 
+        while (true)
         {
-            Console.WriteLine(@"Выберите пункт: 1 - Автор
-                2 - Подсчёт значения обратной польской записи
-                3 - Проверка скобочной последовательности на корректность
-                4 - Выход");
+            Console.Write("Выберите пункт:\n" +
+                "1 - Автор\n" +
+                "2 - Подсчёт значения обратной польской записи\n" +
+                "3 - Проверка скобочной последовательности на корректность\n" +
+                "4 - Выход\n" +
+                "\nВвод: ");
             int point = Convert.ToInt32(Console.ReadLine());
             Console.Clear();
 
@@ -123,38 +124,56 @@ class Menu
                     break;
 
                 case 2:
-                    Console.WriteLine("Выберите действие:\n1 - Данные о задаче\n" +
-                                        "2 - Подсчёт значения выражения, предоставленного " +
-                                        "в виде обратной польской записи\n");
-                    secondPoint = Convert.ToInt32(Console.ReadLine());
-                    Console.Clear();
-
-                    if (secondPoint == 1)
-                        Console.WriteLine("На вход подаётся выражение записанное " +
-                                          "в обратной польской нотации.\n" +
-                                          "Программа вычисляет значение на основе данного выражения\n");
-                    else if (secondPoint == 2)
+                    while (true)
                     {
-                        PolishNotation polishNotation = new PolishNotation();
-                        polishNotation.PolNot();
+                        Console.Write("Выберите действие:\n1 - Данные о задаче\n" +
+                                            "2 - Подсчёт значения выражения, предоставленного " +
+                                            "в виде обратной польской записи\n" +
+                                            "3 - Вернуться в главное меню\n" +
+                                            "\nВвод: ");
+                        secondPoint = Convert.ToInt32(Console.ReadLine());
+                        Console.Clear();
+
+                        if (secondPoint == 1)
+                            Console.WriteLine("На вход подаётся выражение записанное " +
+                                              "в обратной польской нотации.\n" +
+                                              "Программа вычисляет значение на основе данного выражения\n");
+                        else if (secondPoint == 2)
+                        {
+                            PolishNotation polishNotation = new PolishNotation();
+                            polishNotation.PolNot();
+                        }
+                        else if (secondPoint == 3)
+                            break;
+                        else
+                            Console.WriteLine("Ошибка в выборе действия, попробуйте ещё раз\n");
                     }
                     break;
 
                 case 3:
-                    Console.WriteLine("Выберите действие:\n1 - Данные о задаче\n" +
-                                        "2 - Проверить скобочную последовательность " +
-                                        "на корректность\n");
-                    secondPoint = Convert.ToInt32(Console.ReadLine());
-                    Console.Clear();
-
-                    if (secondPoint == 1)
-                        Console.WriteLine("На вход подаётся последовательность скобок\n" +
-                                          "Программа выявляет корректо ли задана " +
-                                          "скобочная последовательность\n");
-                    else if (secondPoint == 2)
+                    while (true)
                     {
-                        SequenceBrackets sequenceBrackets = new SequenceBrackets();
-                        sequenceBrackets.SeqBra();
+                        Console.Write("Выберите действие:\n1 - Данные о задаче\n" +
+                                            "2 - Проверить скобочную последовательность " +
+                                            "на корректность\n" +
+                                             "3 - Вернуться в главное меню\n" +
+                                            "\nВвод: ");
+                        secondPoint = Convert.ToInt32(Console.ReadLine());
+                        Console.Clear();
+
+                        if (secondPoint == 1)
+                            Console.WriteLine("На вход подаётся последовательность скобок\n" +
+                                              "Программа выявляет корректо ли задана " +
+                                              "скобочная последовательность\n");
+                        else if (secondPoint == 2)
+                        {
+                            SequenceBrackets sequenceBrackets = new SequenceBrackets();
+                            sequenceBrackets.SeqBra();
+                        }
+                        else if (secondPoint == 3)
+                            break;
+                        else
+                            Console.WriteLine("Ошибка в выборе действия, попробуйте ещё раз\n");
                     }
                     break;
 
@@ -164,15 +183,12 @@ class Menu
                     break;
 
                 default:
-                    Console.WriteLine("Ошибка в выборе пункта, попробуйте ещё раз");
+                    Console.WriteLine("Ошибка в выборе пункта, попробуйте ещё раз\n");
                     break;
 
             }
-
             if (flag)
                 break;
-
         }
-
     }
 }
