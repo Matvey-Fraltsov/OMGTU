@@ -2,7 +2,7 @@ class PolishNotation
 {
     public void PolNot()
     {
-        Console.Write("Введите выражение записанное в обратной польской нотации.\n" +
+        Console.Write("Введите выражение, записанное в обратной польской нотации.\n" +
                       "Ввод каждого символа через пробел. Пример: 3 3 + 2 *\n" +
                       "\nВвод: ");
         string polishNotation = Console.ReadLine();
