@@ -1,4 +1,4 @@
-def dfs(graph, start, visited=None):
+def DFS(graph, start, visited=None):
     if visited is None:
         visited = set()
     visited.add(start)
@@ -6,7 +6,7 @@ def dfs(graph, start, visited=None):
 
     for i, node in enumerate(graph[start]):
         if node and i not in visited:
-            dfs(graph, i, visited)
+            DFS(graph, i, visited)
 
 
 graph = [
@@ -20,4 +20,4 @@ graph = [
 
 start_node = 0
 print("Обход в глубину из вершины:", start_node)
-dfs(graph, start_node)
+DFS(graph, start_node)
