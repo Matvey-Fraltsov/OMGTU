@@ -27,4 +27,4 @@ graph = [
 
 start_node = 0
 print("Обход в ширину из вершины:", start_node)
-bfs(graph, start_node)
+BFS(graph, start_node)
